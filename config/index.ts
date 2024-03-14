@@ -1,0 +1,1 @@
+export const MONGO_URI = "mongodb://online_food_delivery"
