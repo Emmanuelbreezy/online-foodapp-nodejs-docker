@@ -12,7 +12,7 @@ export interface CreateVendorInput {
 export interface EditLoginInputDto {
   name: string;
   address: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   foodType: string[]
 }
 

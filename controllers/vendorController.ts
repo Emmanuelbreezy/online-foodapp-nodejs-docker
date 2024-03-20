@@ -82,7 +82,7 @@ export const updateVendorProfile = async (
 
     vendor.name = name;
     vendor.address = address;
-    vendor.phoneNumber = phoneNumber;
+    vendor.phoneNumber = phoneNumber || vendor.phoneNumber;
     vendor.foodType = foodType;
 
     const savedResult = await vendor.save();
