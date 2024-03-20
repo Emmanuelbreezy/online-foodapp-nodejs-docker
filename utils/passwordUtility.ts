@@ -7,3 +7,8 @@ export const GenerateSalt = async () => {
 export const GeneratePassword = async (password:string, salt:string) => {
     return await bcrypt.hash(password, salt);
 }
+
+export const ValidatePassword = async (password:string, hashPassword:string) => {
+    return await bcrypt.compare(password, hashPassword)
+}
+
