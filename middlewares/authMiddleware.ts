@@ -17,6 +17,7 @@ export const Authenticate = async (
       });
     }
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       message: "Internal Server Error",
       status: "error",
