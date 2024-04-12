@@ -10,7 +10,7 @@ const imageStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "images");
   },
-  filename: function (req, file, cb) {
+  filename: function (_, file, cb) {
     cb(null, generateRandomUUID() + "_" + file.originalname);
   },
 });

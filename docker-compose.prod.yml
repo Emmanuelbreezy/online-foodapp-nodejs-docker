@@ -3,10 +3,11 @@ services:
   node-api:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
         - NODE_ENV=production
     environment:
       - NODE_ENV=production
     ports:
-      -8000:8000
+      - "8000:8000"
     command: node dist/index.js

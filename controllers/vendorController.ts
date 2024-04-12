@@ -6,6 +6,8 @@ import { CreateFoodInputDto } from "dto/food.dto";
 import { Food } from "../models";
 import { validateRequiredFields } from "utils/validateField";
 
+
+
 export const vendorLogin = async (
   req: Request,
   res: Response,
@@ -35,7 +37,7 @@ export const vendorLogin = async (
 
   const token = GenerateSignature(payload);
   return res.status(200).json({
-    message: "Login success",
+    message: "Login success!!!!!",
     token: token,
   });
 };

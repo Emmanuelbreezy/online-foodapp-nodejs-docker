@@ -1,8 +1,37 @@
 version: '3'
 services:
-  node-app:
+  node-api:
+    container_name: node-api
+    restart: always
     build: .
     ports:
       - "8000:8000"
+    networks:
+      - node-app
     environment:
       - PORT=8000
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo
+    container_name: docker-mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - node-app
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME}
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+
+networks:
+  node-app:
+    driver: bridge
+
+volumes:
+  mongo-data:

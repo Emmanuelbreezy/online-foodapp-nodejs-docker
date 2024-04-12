@@ -25,7 +25,7 @@ export const createVendor = async (
     phoneNumber,
   } = <CreateVendorInput>req.body;
 
-  const existingVendor = await FindVendor("", email);
+  const existingVendor =  await Vendor.findOne({ email: email })
 
   if (existingVendor) {
     return res.status(401).json({ message: "Email already exists" });
