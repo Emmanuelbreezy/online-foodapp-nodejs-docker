@@ -1,7 +1,6 @@
 version: '3'
 services:
   node-api:
-    container_name: node-api
     restart: always
     build: .
     ports:
@@ -12,10 +11,10 @@ services:
       - PORT=8000
     depends_on:
       - mongo_db
+      - redis
 
   mongo_db:
     image: mongo
-    container_name: docker-mongo
     ports:
       - '27017:27017'
     networks:
@@ -27,6 +26,11 @@ services:
     volumes:
       - mongo-data:/data/db
     restart: always
+
+  redis:
+    image: redis
+    networks:
+      - node-app
 
 
 networks:

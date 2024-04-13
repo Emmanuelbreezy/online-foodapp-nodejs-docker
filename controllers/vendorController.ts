@@ -2,11 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { Vendor } from "../models/Vendor.model";
 import { EditLoginInputDto, VendorLoginInputs } from "../dto";
 import { GenerateSignature, ValidatePassword } from "../utils";
-import { CreateFoodInputDto } from "dto/food.dto";
+import { CreateFoodInputDto } from "../dto/food.dto";
 import { Food } from "../models";
-import { validateRequiredFields } from "utils/validateField";
-
-
 
 export const vendorLogin = async (
   req: Request,
@@ -35,6 +32,7 @@ export const vendorLogin = async (
     role: "20001",
   };
 
+  req.session.user = payload;
   const token = GenerateSignature(payload);
   return res.status(200).json({
     message: "Login success!!!!!",
@@ -68,7 +66,7 @@ export const updateVendorCoverImage = async (
 ) => {
   try {
     const user = req.user;
-    const files = req.files as [Express.Multer.File]
+    const files = req.files as [Express.Multer.File];
 
     if (!user) {
       return res.status(401).json({
@@ -83,7 +81,7 @@ export const updateVendorCoverImage = async (
       });
     }
 
-    const images = files?.map((file:Express.Multer.File) => file.filename);
+    const images = files?.map((file: Express.Multer.File) => file.filename);
     vendor.coverImages.push(...images);
     const savedResult = await vendor.save();
 
@@ -99,7 +97,6 @@ export const updateVendorCoverImage = async (
     });
   }
 };
-
 
 export const updateVendorProfile = async (
   req: Request,
@@ -191,7 +188,7 @@ export const addFood = async (
     const { name, description, category, foodType, readyTime, price } = <
       CreateFoodInputDto
     >req.body;
-    const files = req.files as [Express.Multer.File]
+    const files = req.files as [Express.Multer.File];
 
     // const requiredFields = [
     //   "name",
@@ -199,7 +196,7 @@ export const addFood = async (
     //   "amenitiesId"
     // ];
     // const missingField = validateRequiredFields(requiredFields, req.body);
-  
+
     // if (missingField) {
     //   return res.status(400).json({
     //     message: `${missingField} is required`,
@@ -222,7 +219,7 @@ export const addFood = async (
       });
     }
 
-    const images = files?.map((file:Express.Multer.File) => file.filename);
+    const images = files?.map((file: Express.Multer.File) => file.filename);
 
     const createFood = await Food.create({
       vendorId: vendor._id,
@@ -266,7 +263,7 @@ export const getFoods = async (
       });
     }
 
-    const vendor = await Vendor.findById(user._id).populate('foods');
+    const vendor = await Vendor.findById(user._id).populate("foods");
     if (!vendor) {
       return res.status(401).json({
         msg: "Vendor not found",

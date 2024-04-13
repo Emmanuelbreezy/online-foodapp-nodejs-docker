@@ -2,6 +2,7 @@ version: '3'
 services:
   node-api:
     build:
+      container_name: node-api-prod
       context: .
       dockerfile: Dockerfile
       args:
@@ -11,3 +12,6 @@ services:
     ports:
       - "8000:8000"
     command: node dist/index.js
+
+  mongo_db:
+    container_name: docker-mongo-prod
